@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Adres.Procurement.Api/Adres.Procurement.Api.csproj" />
+  <Project Path="Adres.Procurement.Application/Adres.Procurement.Application.csproj" />
+  <Project Path="Adres.Procurement.Domain/Adres.Procurement.Domain.csproj" />
+  <Project Path="Adres.Procurement.Infrastructure/Adres.Procurement.Infrastructure.csproj" />
+</Solution>
