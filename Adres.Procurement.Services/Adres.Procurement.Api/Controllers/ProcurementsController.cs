@@ -22,10 +22,23 @@ public class ProcurementsController(IMediator mediator,
     private readonly string _storagePath = storageOptions.Value.Path;
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IEnumerable<ProcurementDto>>>> GetList()
+    public async Task<ActionResult<ApiResponse<PagedResultDto<ProcurementDto>>>> GetList(
+        [FromQuery] ProcurementListQueryDto queryDto)
     {
-        IEnumerable<ProcurementEntity> procurements = await _mediator.Send(new GetProcurementsQuery());
-        return OkResponse(procurements.Adapt<IEnumerable<ProcurementDto>>());
+        PagedResult<ProcurementEntity> result = await _mediator.Send(new GetProcurementsQuery(
+            new ProcurementFilter(
+                queryDto.Entity,
+                queryDto.Supplier,
+                queryDto.Item,
+                queryDto.IncludeInactive,
+                queryDto.DateFrom,
+                queryDto.DateTo,
+                queryDto.Search),
+            queryDto.Page,
+            queryDto.PageSize
+        ));
+
+        return OkResponse(result.Adapt<PagedResultDto<ProcurementDto>>());
     }
 
     [HttpGet("{id:guid}")]

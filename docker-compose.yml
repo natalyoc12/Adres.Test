@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: webapi
+    build:
+      context: ./Adres.Procurement.Services/
+      dockerfile: Dockerfile
+    depends_on:
+      - sqlserver
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DB_CONNECTION_STRING: "Server=sqlserver,1433;Database=AppDb;User Id=sa;Password=Your_strong_password_123;TrustServerCertificate=True;"
+    ports:
+      - "8080:8080"
+    networks:
+      - appnet
+
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
+      SA_PASSWORD: "Your_strong_password_123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - appnet
+
+networks:
+  appnet:
+
+volumes:
+  sql_data:

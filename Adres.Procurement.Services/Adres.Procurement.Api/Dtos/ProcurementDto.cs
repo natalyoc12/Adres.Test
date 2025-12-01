@@ -11,5 +11,6 @@ public record ProcurementDto(
     DateTime Date,
     string Supplier,
     IEnumerable<ProcurementFileDto> Files,
-    bool IsActive
+    bool IsActive,
+    DateTime CreatedAt
 );
