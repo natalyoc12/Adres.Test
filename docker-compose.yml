@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   api:
     container_name: webapi
@@ -8,11 +6,27 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - sqlserver
+      - migrator
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      DB_CONNECTION_STRING: "Server=sqlserver,1433;Database=AppDb;User Id=sa;Password=Your_strong_password_123;TrustServerCertificate=True;"
+      DB_CONNECTION_STRING: "Server=sqlserver,1433;Database=ProcurementsDb;User Id=sa;Password=Your_strong_password_123;TrustServerCertificate=True;"
     ports:
       - "8080:8080"
+    networks:
+      - appnet
+
+  migrator:
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    container_name: migrator
+    working_dir: /src
+    volumes:
+      - ./Adres.Procurement.Services:/src
+    environment:
+      DB_CONNECTION_STRING: "Server=sqlserver,1433;Database=ProcurementsDb;User Id=sa;Password=Your_strong_password_123;TrustServerCertificate=True;"
+      PATH: "/root/.dotnet/tools:$PATH"
+    entrypoint: ["/bin/sh", "-c", "dotnet restore && dotnet tool install --global dotnet-ef && dotnet ef database update --startup-project Adres.Procurement.Api --project Adres.Procurement.Infrastructure"]
+    depends_on:
+      - sqlserver
     networks:
       - appnet
 
@@ -27,6 +41,16 @@ services:
       - "1433:1433"
     volumes:
       - sql_data:/var/opt/mssql
+    networks:
+      - appnet
+
+  web:
+    container_name: angularweb
+    build:
+      context: ./Adres.Web/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
     networks:
       - appnet
 
