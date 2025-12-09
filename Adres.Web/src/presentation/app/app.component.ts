@@ -10,4 +10,5 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  title = 'Adres.Web';
 }
