@@ -430,3 +430,7 @@ FodyWeavers.xsd
 # Generated Swagger files
 swagger.json
 swagger.yaml
+
+# System files
+.DS_Store
+Thumbs.db

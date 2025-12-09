@@ -5,8 +5,20 @@ using Adres.Procurement.Api.Middleware;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Adres.Procurement.Api.Configurations;
+using Adres.Procurement.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
@@ -38,8 +50,11 @@ if (app.Environment.IsDevelopment())
     {
         options.DocumentPath = "/openapi/v1.json";
     });
+
+    await DbInitializer.SeedAsync(app.Services);
 }
 
+app.UseCors("AllowAllOrigins");
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();

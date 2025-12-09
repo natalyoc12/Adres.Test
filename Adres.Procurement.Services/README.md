@@ -77,7 +77,7 @@ dotnet restore
 
 ```bash
 cd Adres.Procurement.Infrastructure
-dotnet ef database update --startup-project ../Adres.Procurement.Api
+dotnet ef database update --startup-project Adres.Procurement.Api --project Adres.Procurement.Infrastructure
 ```
 
 ### 4. Ejecutar la API
@@ -96,13 +96,13 @@ Para crear una nueva migración:
 
 ```bash
 cd Adres.Procurement.Infrastructure
-dotnet ef migrations add <NombreMigracion> --startup-project ../Adres.Procurement.Api
+dotnet ef migrations add <NombreMigracion> --startup-project Adres.Procurement.Api --project Adres.Procurement.Infrastructure
 ```
 
 Para aplicar migraciones:
 
 ```bash
-dotnet ef database update --startup-project ../Adres.Procurement.Api
+dotnet ef database update --startup-project Adres.Procurement.Api --project Adres.Procurement.Infrastructure
 ```
 
 Configura la cadena de conexión en `Adres.Procurement.Api/appsettings.json`:
@@ -278,6 +278,6 @@ La API estará disponible en `http://localhost:8080`.
 ## Contacto
 
 - Autor: Leidy Nataly Ocampo
-- Email: [leidyocampo1821@gmail.com]
+- Email: [[leidyocampo1821@gmail.com](mailto:leidyocampo1821@gmail.com)]
 - Github: [https://github.com/natalyoc12]
 - LinkedIn: [https://www.linkedin.com/in/leidy-nataly/]
