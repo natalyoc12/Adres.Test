@@ -1,0 +1,122 @@
+:host {
+    display: block
+}
+
+.card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f3f4f6
+}
+
+.card-title {
+    margin: 0;
+    font-weight: 600
+}
+
+.card-content {
+    padding: 1rem
+}
+
+.doc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-radius: 6px;
+    padding: 0.5rem;
+    border: 1px solid transparent
+}
+
+.doc-left {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center
+}
+
+.doc-icon {
+    font-size: 1.1rem
+}
+
+.timeline ul {
+    list-style: none;
+    padding: 0;
+    margin: 0
+}
+
+.timeline li {
+    padding: 0.75rem 0;
+    border-left: 2px solid #e5e7eb;
+    margin-left: 0.5rem;
+    position: relative
+}
+
+.timeline .time {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem
+}
+
+.timeline .event {
+    background: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4)
+}
+
+.modal {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 28rem;
+    width: 100%
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 1rem
+}
+
+.btn,
+.btn-ghost,
+.btn-outline {
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none
+}
+
+.btn {
+    background: #111827;
+    color: #fff
+}
+
+.btn-outline {
+    border: 1px solid #d1d5db;
+    background: transparent
+}
+
+.btn-ghost {
+    background: transparent;
+    border: none
+}
+
+.text-destructive {
+    color: #dc2626
+}

@@ -1,0 +1,55 @@
+<div class="rounded-lg border bg-card overflow-auto">
+	<table class="min-w-full divide-y">
+		<thead class="bg-transparent">
+			<tr class="hover:bg-transparent">
+				<th *ngFor="let column of columns" class="px-4 py-2 text-left font-semibold">
+					<ng-container *ngIf="column.sortable; else plainHeader">
+						<button type="button" class="flex items-center gap-1 text-sm" (click)="sort(column.accessor)">
+							<span>{{ column.header }}</span>
+							<ng-container *ngIf="sortColumn === column.accessor">
+								<svg *ngIf="sortDirection === 'asc'" class="ml-1 h-4 w-4"
+									xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+									stroke="currentColor">
+									<path d="M18 15l-6-6-6 6" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round" />
+								</svg>
+								<svg *ngIf="sortDirection === 'desc'" class="ml-1 h-4 w-4"
+									xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+									stroke="currentColor">
+									<path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round" />
+								</svg>
+							</ng-container>
+						</button>
+					</ng-container>
+					<ng-template #plainHeader>
+						<span>{{ column.header }}</span>
+					</ng-template>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngIf="data.length === 0">
+				<td [attr.colspan]="columns.length" class="h-24 text-center text-muted-foreground">
+					No se encontraron resultados
+				</td>
+			</tr>
+			<tr *ngFor="let item of data; let rowIndex = index">
+				<td *ngFor="let column of columns; let colIndex = index" class="px-4 py-2 align-top"
+					[class]="column.accessor == 'totalPrice' || column.accessor == 'unitPrice' || column.accessor == 'quantity' || column.accessor == 'budget' ? 'text-right' : ''">
+					<ng-container *ngIf="column.template; else cellOrDefault">
+						<ng-container *ngTemplateOutlet="column.template; context: { $implicit: item }"></ng-container>
+					</ng-container>
+					<ng-template #cellOrDefault>
+						<ng-container *ngIf="column.cell; else defaultCell">
+							<span [innerHTML]="toHtml(column.cell(item))"></span>
+						</ng-container>
+						<ng-template #defaultCell>
+							{{ getCellValue(item, column.accessor) }}
+						</ng-template>
+					</ng-template>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

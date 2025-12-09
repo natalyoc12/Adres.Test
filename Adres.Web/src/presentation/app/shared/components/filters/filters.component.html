@@ -1,0 +1,74 @@
+<div class="card bg-card border rounded-md">
+  <form [formGroup]="filtrosForm" (ngSubmit)="updateFilter()">
+    <div class="card-header p-2 border-b">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-semibold">Filtros</h3>
+        <div class="flex gap-2">
+          <button type="button" (click)="resetFilters()"
+            class="btn btn-ghost text-xs h-8 px-2 inline-flex items-center">
+            <svg class="h-3 w-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor">
+              <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Limpiar filtros
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-content p-4 space-y-4">
+      <div class="space-y-2">
+        <label for="search" class="text-xs font-medium">Buscar</label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="11" cy="11" r="6" stroke-width="2" />
+            <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <input id="search" type="search" formControlName="search" placeholder="Buscar por Unidad o proveedor..."
+            class="pl-9 w-full h-10 rounded-md border focus:border-input focus:ring-0 bg-transparent" />
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="space-y-2">
+          <label for="entity" class="text-xs font-medium">Entidad</label>
+          <input id="entity" type="text" formControlName="entity" placeholder=""
+            class="pl-2 w-full h-10 rounded-md border focus:border-input focus:ring-0 bg-transparent" />
+        </div>
+
+        <div class="space-y-2">
+          <label for="supplier" class="text-xs font-medium">Proveedor</label>
+          <input id="supplier" type="text" formControlName="supplier" placeholder=""
+            class="pl-2 w-full h-10 rounded-md border focus:border-input focus:ring-0 bg-transparent" />
+        </div>
+
+        <div class="space-y-2">
+          <label for="item" class="text-xs font-medium">Tipo de Bien o Servicio</label>
+          <input id="item" type="text" formControlName="item" placeholder=""
+            class="pl-2 w-full h-10 rounded-md border focus:border-input focus:ring-0 bg-transparent" />
+        </div>
+
+        <div class="space-y-2">
+          <label for="includeInactive" class="text-xs font-medium">Estado</label>
+          <select id="includeInactive" formControlName="includeInactive" class="pl-2 w-full h-10 rounded-md border">
+            <option value="active">Activos</option>
+            <option value="inactive">Incluir Inactivos</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="space-y-2">
+          <label for="dateFrom" class="text-xs font-medium">Fecha Desde</label>
+          <input id="dateFrom" type="date" formControlName="dateFrom" class="pl-2 w-full h-10 rounded-md border" />
+        </div>
+        <div class="space-y-2">
+          <label for="dateTo" class="text-xs font-medium">Fecha Hasta</label>
+          <input id="dateTo" type="date" formControlName="dateTo" class="pl-2 w-full h-10 rounded-md border" />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline w-full">Filtrar</button>
+    </div>
+  </form>
+</div>

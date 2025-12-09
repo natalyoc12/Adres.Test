@@ -1,0 +1,56 @@
+<aside class="fixed left-0 top-0 z-40 h-screen w-64 bg-sidebar border-r border-sidebar-border">
+	<div class="flex h-full flex-col">
+		<div class="flex h-16 items-center gap-2 border-b border-sidebar-border px-6">
+			<svg class="h-6 w-6 text-sidebar-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+				stroke="currentColor">
+				<path d="M3 21h18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+				<path d="M21 19V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v11" stroke-width="2" stroke-linecap="round"
+					stroke-linejoin="round" />
+				<path d="M7 10h2v6H7zM11 6h2v10h-2zM15 12h2v4h-2z" stroke-width="2" stroke-linecap="round"
+					stroke-linejoin="round" />
+			</svg>
+			<span class="font-semibold text-sidebar-foreground">ProcureApp</span>
+		</div>
+
+		<nav class="flex-1 space-y-1 p-4">
+			<ng-container *ngFor="let item of navigation">
+				<a [routerLink]="item.href"
+					class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+					[ngClass]="isActive(item.href) ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'">
+					<ng-container [ngSwitch]="item.name">
+						<svg *ngSwitchCase="'Adquisiciones'" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<path d="M21 8V6a2 2 0 0 0-2-2h-4l-2-2h-4L7 4H5a2 2 0 0 0-2 2v2" stroke-width="2"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<rect x="3" y="8" width="18" height="13" rx="2" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+						<svg *ngSwitchDefault class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+							fill="none" stroke="currentColor">
+							<circle cx="12" cy="12" r="10" stroke-width="2" />
+						</svg>
+					</ng-container>
+
+					<span>{{ item.name }}</span>
+				</a>
+			</ng-container>
+		</nav>
+
+		<div class="border-t border-sidebar-border p-4">
+			<button class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-sidebar-accent/50">
+				<div
+					class="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
+					<span class="text-xs font-medium">AD</span>
+				</div>
+				<div class="flex-1 text-left">
+					<p class="text-sm font-medium text-sidebar-foreground">Admin</p>
+					<p class="text-xs text-sidebar-foreground/60">adres.gov.co</p>
+				</div>
+				<svg class="h-4 w-4 text-sidebar-foreground/60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+					fill="none" stroke="currentColor">
+					<path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</button>
+		</div>
+	</div>
+</aside>

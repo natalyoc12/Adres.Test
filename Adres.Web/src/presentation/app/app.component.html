@@ -1,0 +1,11 @@
+<div class="flex h-screen overflow-hidden">
+    <div class="fixed left-0 top-0 z-40 h-screen w-64 bg-sidebar border-r border-sidebar-border">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="flex flex-1 flex-col overflow-hidden pl-64">
+        <app-header></app-header>
+        <main class="flex-1 overflow-y-auto bg-background p-6">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

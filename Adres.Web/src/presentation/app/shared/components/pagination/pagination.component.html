@@ -1,0 +1,44 @@
+<div class="flex items-center justify-between px-2 py-4">
+	<div class="flex items-center gap-2 text-sm text-muted-foreground">
+		<span>
+			Mostrando {{ startItem }} a {{ endItem }} de {{ totalItems }} resultados
+		</span>
+
+		<select [value]="pageSize.toString()" (change)="changePageSize($any($event.target).value)"
+			class="h-8 w-20 rounded-md">
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+		</select>
+		<span>páginas</span>
+	</div>
+
+	<div class="flex items-center gap-2">
+		<button type="button" class="btn btn-outline btn-sm" (click)="changePage(currentPage - 1)"
+			[disabled]="currentPage === 1">
+			<svg class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+				stroke="currentColor">
+				<path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+			Anterior
+		</button>
+
+		<div class="flex items-center gap-1">
+			<button *ngFor="let p of pageButtons" class="w-9 h-8 rounded-md text-sm"
+				[ngClass]="{'bg-default text-default-foreground': currentPage===p, 'border': currentPage!==p}"
+				(click)="changePage(p)">
+				{{ p }}
+			</button>
+		</div>
+
+		<button type="button" class="btn btn-outline btn-sm hover:btn-sm" (click)="changePage(currentPage + 1)"
+			[disabled]="currentPage === totalPages">
+			Siguiente
+			<svg class="h-4 w-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+				stroke="currentColor">
+				<path d="M9 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+	</div>
+</div>

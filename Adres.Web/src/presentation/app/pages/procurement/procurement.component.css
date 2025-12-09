@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  max-width: 28rem;
+  width: 100%;
+}
+
+.btn-ghost { background: transparent; border: none; cursor: pointer }
+.text-destructive { color: #dc2626 }

@@ -1,0 +1,200 @@
+<div class="space-y-6">
+	<div class="flex items-center justify-between">
+		<div class="flex items-center gap-4">
+			<a class="btn-ghost" [routerLink]="['']" title="Back">◀</a>
+			<div>
+				<h1 class="text-3xl font-bold tracking-tight text-balance">Detalles</h1>
+				<p class="text-muted-foreground">ID: {{ acquisitionData?.id }}</p>
+			</div>
+		</div>
+
+		<div class="flex items-center gap-2">
+			<button *ngIf="acquisitionData?.isActive === true" class="btn-outline"
+				(click)="showDeactivateDialog = true">🚫
+				Inactivo</button>
+			<button *ngIf="acquisitionData?.isActive !== true" class="btn-outline" (click)="showActivateDialog = true">✔
+				Activo</button>
+			<a class="btn">✏️ Editar</a>
+		</div>
+	</div>
+
+	<div class="grid gap-6 lg:grid-cols-3">
+		<div class="lg:col-span-2 space-y-6">
+			<section class="card">
+				<header class="card-header">
+					<h3 class="card-title">Resumen</h3>
+					<app-status-badge [status]="acquisitionData?.isActive ?? false"></app-status-badge>
+				</header>
+				<div class="card-content">
+					<div class="grid gap-6 sm:grid-cols-2">
+						<div class="space-y-4">
+							<div class="flex items-start gap-3">
+								<div class="icon">💵</div>
+								<div class="flex-1">
+									<p class="text-sm text-muted-foreground">Presupuesto</p>
+									<p class="font-semibold">${{ acquisitionData?.budget?.toLocaleString() }}</p>
+								</div>
+							</div>
+
+							<div class="flex items-start gap-3">
+								<div class="icon">🏢</div>
+								<div class="flex-1">
+									<p class="text-sm text-muted-foreground">Unidad</p>
+									<p class="font-semibold">{{ acquisitionData?.entity }}</p>
+								</div>
+							</div>
+
+							<div class="flex items-start gap-3">
+								<div class="icon">📦</div>
+								<div class="flex-1">
+									<p class="text-sm text-muted-foreground">Tipo de artículo</p>
+									<p class="font-semibold">{{ acquisitionData?.item }}</p>
+								</div>
+							</div>
+
+							<div class="flex items-start gap-3">
+								<div class="icon">👤</div>
+								<div class="flex-1">
+									<p class="text-sm text-muted-foreground">Proveedor</p>
+									<p class="font-semibold">{{ acquisitionData?.supplier }}</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="space-y-4">
+							<div class="flex items-start gap-3">
+								<div class="icon">📅</div>
+								<div class="flex-1">
+									<p class="text-sm text-muted-foreground">Fecha de adquisición</p>
+									<p class="font-semibold">{{ acquisitionData?.date | date }}</p>
+								</div>
+							</div>
+
+							<div>
+								<p class="text-sm text-muted-foreground mb-1">Cantidad</p>
+								<p class="font-semibold">{{ acquisitionData?.quantity }} unidades</p>
+							</div>
+
+							<div>
+								<p class="text-sm text-muted-foreground mb-1">Precio unitario</p>
+								<p class="font-semibold">${{ acquisitionData?.unitPrice?.toLocaleString() }}</p>
+							</div>
+
+							<div>
+								<p class="text-sm text-muted-foreground mb-1">Precio total</p>
+								<p class="text-xl font-bold text-primary">${{
+									acquisitionData?.totalPrice?.toLocaleString() }}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="card">
+				<header class="card-header">
+					<h3 class="card-title">Documentos</h3>
+				</header>
+				<div class="card-content">
+					<div *ngIf="documents.length > 0; else noDocs" class="space-y-3">
+						<div *ngFor="let doc of documents" class="doc-row">
+							<div class="doc-left">
+								<div class="doc-icon">📄</div>
+								<div class="flex-1 min-w-0">
+									<p class="text-sm font-medium truncate">{{ doc.name }}</p>
+									<p class="text-xs text-muted-foreground">{{ formatFileSize(doc.size) }} • {{
+										doc.uploadDate | date }}</p>
+								</div>
+							</div>
+							<button class="btn-ghost" (click)="downloadDocument(doc.id)">⬇️</button>
+						</div>
+					</div>
+					<ng-template #noDocs>
+						<p class="text-sm text-muted-foreground text-center py-8">No hay documentos adjuntos</p>
+					</ng-template>
+				</div>
+			</section>
+
+			<div>
+				<div class="flex items-center justify-between mb-4">
+					<h2 class="text-xl font-semibold">Actividad Reciente</h2>
+					<a class="btn-outline">Ver Historial
+						Completo</a>
+				</div>
+				<div class="timeline">
+					<ul>
+						<li *ngFor="let ev of recentHistory">
+							<div class="time">{{ ev.timestamp | date:'short' }}</div>
+							<div class="event">
+								<div class="event-header"><strong>{{ ev.action }}</strong> <span class="by"> por {{
+										ev.user }}</span></div>
+								<div *ngIf="ev.changes?.length" class="changes">
+									<table>
+										<thead>
+											<tr>
+												<th>Campo</th>
+												<th>Antes</th>
+												<th>Después</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let c of ev.changes">
+												<td>{{ c.field }}</td>
+												<td>{{ c.before }}</td>
+												<td>{{ c.after }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<aside class="space-y-6">
+			<section class="card">
+				<header class="card-header">
+					<h4 class="card-title">Metadatos</h4>
+				</header>
+				<div class="card-content space-y-4">
+					<div>
+						<p class="text-sm text-muted-foreground mb-1">Creado por</p>
+						<p class="text-sm font-medium"></p>
+					</div>
+					<app-separator></app-separator>
+					<div>
+						<p class="text-sm text-muted-foreground mb-1">Creado el</p>
+						<p class="text-sm font-medium">{{ acquisitionData?.createdAt | date:'short' }}</p>
+					</div>
+					<app-separator></app-separator>
+					<div>
+						<p class="text-sm text-muted-foreground mb-1">Última actualización</p>
+						<p class="text-sm font-medium">{{ acquisitionData?.createdAt | date:'short' }}</p>
+					</div>
+				</div>
+			</section>
+		</aside>
+	</div>
+
+	<div *ngIf="showDeactivateDialog" class="modal-backdrop">
+		<div class="modal">
+			<h3 class="text-lg font-semibold">Desactivar Adquisición</h3>
+			<p class="text-sm text-muted-foreground">¿Está seguro de que desea desactivar esta adquisición? Esta acción
+				se puede revertir más tarde reactivándola.</p>
+			<div class="modal-actions"><button (click)="showDeactivateDialog=false">Cancelar</button><button
+					class="text-destructive" (click)="handleDeactivate()">Desactivar</button></div>
+		</div>
+	</div>
+
+	<div *ngIf="showActivateDialog" class="modal-backdrop">
+		<div class="modal">
+			<h3 class="text-lg font-semibold">Activar Adquisición</h3>
+			<p class="text-sm text-muted-foreground">¿Está seguro de que desea activar esta adquisición? Esto la hará
+				activa en el sistema.</p>
+			<div class="modal-actions"><button (click)="showActivateDialog=false">Cancelar</button><button
+					(click)="handleActivate()">Activar</button></div>
+		</div>
+	</div>
+</div>
